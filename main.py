@@ -9,7 +9,7 @@ import re
 API_ID = os.environ.get("API_ID", None) 
 API_HASH = os.environ.get("API_HASH", None) 
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None) 
-KUKI_API = os.environ.get("KUKI_API", None) 
+Jinx_API = os.environ.get("Jinx_API", None) 
 ERROR_LOG = os.environ.get("ERROR_LOG", None) 
 MONGO_URL = os.environ.get("MONGO_URL", None)
 
@@ -34,9 +34,9 @@ async def is_admins(chat_id: int):
     filters.command("setupchat", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
 async def addchat(_, message): 
-    kukidb = MongoClient(MONGO_URL)
+    Jinxdb = MongoClient(MONGO_URL)
     
-    kuki = kukidb["KukiDb"]["Kuki"] 
+    Jinx = Jinxdb["JinxDb"]["Jinx"] 
     if message.from_user:
         user = message.from_user.id
         chat_id = message.chat.id
@@ -46,21 +46,21 @@ async def addchat(_, message):
             return await message.reply_text(
                 "You are not admin"
             )
-    is_kuki = kuki.find_one({"chat_id": message.chat.id})
-    if not is_kuki:
-        kuki.insert_one({"chat_id": message.chat.id})
-        await message.reply_text(f"✅ | Successfully\nKuki Chatbot of this Group is set to @{message.chat.username}\n Requested by [{message.from_user.first_name}](tg://user?id={message.from_user.id})\n© @MetaVoid")
+    is_Jinx = Jinx.find_one({"chat_id": message.chat.id})
+    if not is_Jinx:
+        Jinx.insert_one({"chat_id": message.chat.id})
+        await message.reply_text(f"✅ | Successfully\nJinx Chatbot of this Group is set to @{message.chat.username}\n Requested by [{message.from_user.first_name}](tg://user?id={message.from_user.id})\n© @MetaVoid")
     else:
-        await message.reply_text(f"Already Setup Kuki Chatbot of this Group Is @{message.chat.username}")
+        await message.reply_text(f"Already Setup Jinx Chatbot of this Group Is @{message.chat.username}")
 
 
 @bot.on_message(
     filters.command("removechat", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
 async def rmchat(_, message): 
-    kukidb = MongoClient(MONGO_URL)
+    Jinxdb = MongoClient(MONGO_URL)
     
-    kuki = kukidb["KukiDb"]["Kuki"] 
+    Jinx = Jinxdb["JinxDb"]["Jinx"] 
     if message.from_user:
         user = message.from_user.id
         chat_id = message.chat.id
@@ -70,12 +70,12 @@ async def rmchat(_, message):
             return await message.reply_text(
                 "You are not admin"
             )
-    is_kuki = kuki.find_one({"chat_id": message.chat.id})
-    if not is_kuki:
-        await message.reply_text("Already Kuki ChatBot Disable")
+    is_Jinx = Jinx.find_one({"chat_id": message.chat.id})
+    if not is_Jinx:
+        await message.reply_text("Already Jinx ChatBot Disable")
     else:
-        kuki.delete_one({"chat_id": message.chat.id})
-        await message.reply_text("✅ | Kuki Chatbot is disable!")
+        Jinx.delete_one({"chat_id": message.chat.id})
+        await message.reply_text("✅ | Jinx Chatbot is disable!")
 
 
 
@@ -89,14 +89,14 @@ async def rmchat(_, message):
     & ~filters.edited,
     group=2,
 )
-async def kukiai(client: Client, message: Message):
+async def Jinxai(client: Client, message: Message):
 
-   kukidb = MongoClient(MONGO_URL)
+   Jinxdb = MongoClient(MONGO_URL)
     
-   kuki = kukidb["KukiDb"]["Kuki"] 
+   Jinx = Jinxdb["JinxDb"]["Jinx"] 
 
-   is_kuki = kuki.find_one({"chat_id": message.chat.id})
-   if is_kuki:
+   is_Jinx = Jinx.find_one({"chat_id": message.chat.id})
+   if is_Jinx:
        if message.reply_to_message:      
            botget = await bot.get_me()
            botid = botget.id
@@ -108,7 +108,7 @@ async def kukiai(client: Client, message: Message):
            else:
                msg = message.text
            try: 
-               x = requests.get(f"https://kukiapi.xyz/api/apikey={KUKI_API}/message={msg}").json()
+               x = requests.get(f"https://Jinxapi.xyz/api/apikey={Jinx_API}/message={msg}").json()
                x = x['reply']
                await asyncio.sleep(1)
            except Exception as e:
@@ -128,14 +128,14 @@ async def kukiai(client: Client, message: Message):
     & ~filters.edited,
     group=2,
 )
-async def kukiai(client: Client, message: Message):
+async def Jinxai(client: Client, message: Message):
     await bot.send_chat_action(message.chat.id, "typing")
     if not message.text:
         msg = "/"
     else:
         msg = message.text
     try:
-        x = requests.get(f"https://kukiapi.xyz/api/apikey={KUKI_API}/message={msg}").json()
+        x = requests.get(f"https://Jinxapi.xyz/api/apikey={Jinx_API}/message={msg}").json()
         x = x['reply']
         await asyncio.sleep(1)
     except Exception as e:
@@ -149,14 +149,14 @@ async def kukiai(client: Client, message: Message):
 
 @bot.on_message(
     filters.command("chat", prefixes=["/", ".", "?", "-"]))
-async def kukiai(client: Client, message: Message):
+async def Jinxai(client: Client, message: Message):
     await bot.send_chat_action(message.chat.id, "typing")
     if not message.text:
         msg = "/"
     else:
         msg = message.text.replace(message.text.split(" ")[0], "")
     try:
-        x = requests.get(f"https://kukiapi.xyz/api/apikey={KUKI_API}/message={msg}").json()
+        x = requests.get(f"https://Jinxapi.xyz/api/apikey={Jinx_API}/message={msg}").json()
         x = x['reply']
         await asyncio.sleep(1)
     except Exception as e:
@@ -177,7 +177,7 @@ async def start(client, message):
     if message.chat.type != "private":
         buttons = InlineKeyboardMarkup(
             [[InlineKeyboardButton(text="Click here",
-                url=f"t.me/kukichatbot?start")]])
+                url=f"t.me/Jinxchatbot?start")]])
         await message.reply("Contact me in PM",
                             reply_markup=buttons)
         
@@ -203,7 +203,7 @@ async def help(client, message):
                             reply_markup=buttons)
         
     else:    
-        await message.reply_text("/start - Start The Bot\n/chat - Send a message to this bot\n/setupchat - Active Kuki Chatbot In Group\n/removechat - Disable Kuki Chatbot In Group")
+        await message.reply_text("/start - Start The Bot\n/chat - Send a message to this bot\n/setupchat - Active Jinx Chatbot In Group\n/removechat - Disable Jinx Chatbot In Group")
 
 
 
