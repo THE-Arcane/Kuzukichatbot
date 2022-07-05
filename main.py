@@ -182,12 +182,12 @@ async def start(client, message):
                             reply_markup=buttons)
         
     else:
-        buttons = [[InlineKeyboardButton("Support", url="https://t.me/MAGNESIUM_XKRISTY"),
-                    InlineKeyboardButton("Channel", url="https://t.me/About_Zeus_xD"),
+        buttons = [[InlineKeyboardButton("Support", url="https://t.me/ArcaneXsupport"),
+                    InlineKeyboardButton("Channel", url="https://t.me/Arcane_bots"),
                     InlineKeyboardButton("Repo", url="https://github.com/zeusop5/Kuzukichatbot")
                     ]]
         Photo = "https://telegra.ph/file/b04509cc8486f23690bba.jpg"
-        await message.reply_photo(Photo, caption=f"Hello [{message.from_user.first_name}](tg://user?id={message.from_user.id}), Machine Learning Chat Bot that can talk about any topic in any language\n /help - Help Commands\n Powered By @MetaVoid", reply_markup=InlineKeyboardMarkup(buttons))
+        await message.reply_photo(Photo, caption=f"Hello [{message.from_user.first_name}](tg://user?id={message.from_user.id}), Machine Learning Chat Bot that can talk about any topic in any language\n /help - Help Commands\n Powered By @Arcane_bots", reply_markup=InlineKeyboardMarkup(buttons))
 
 
 
